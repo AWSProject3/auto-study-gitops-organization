@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auto-study-deployment
+  namespace: app
+  labels:
+    app: auto-study-backend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: auto-study-backend
+  template:
+    metadata:
+      labels:
+        app: auto-study-backend
+    spec:
+      serviceAccountName: rds-access-sa
+      containers:
+        - name: auto-study-app-container
+          image: 471112903915.dkr.ecr.us-east-1.amazonaws.com/auto-study-app-ver2:0.2
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - secretRef:
+                name: env-secret-backend
+
