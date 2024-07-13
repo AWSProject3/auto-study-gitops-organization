@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: rds-access-sa
+  namespace: app
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::471112903915:role/Eks-Rds-Access-Role
