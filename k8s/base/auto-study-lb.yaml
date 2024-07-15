@@ -4,11 +4,10 @@ metadata:
   name: auto-study-app-service
   namespace: app
 spec:
-  type: LoadBalancer
+  type: NodePort
   selector:
     app: auto-study-backend
   ports:
     - protocol: TCP
       port: 80
       targetPort: 8000
-      # fast api port : 8000
