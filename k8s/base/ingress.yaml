@@ -9,6 +9,7 @@ metadata:
     alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}]'
     alb.ingress.kubernetes.io/certificate-arn: ${env-secret-backend:CERTIFICATE_ARN}
+    alb.ingress.kubernetes.io/load-balancer-name: auto-study-alb
 spec:
   rules:
     - http:
