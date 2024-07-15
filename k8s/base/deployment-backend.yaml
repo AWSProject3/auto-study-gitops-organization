@@ -24,4 +24,8 @@ spec:
           envFrom:
             - secretRef:
                 name: env-secret-backend
-
+          env:
+            - name: REDIS_HOST
+              value: "redis-svc.app.svc.cluster.local"
+            - name: REDIS_PORT
+              value: "6379"
