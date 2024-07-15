@@ -23,5 +23,5 @@ spec:
             - containerPort: 8080
           envFrom:
             - secretRef:
-                name: aws-secretsmanager
+                name: env-secret-backend
 
