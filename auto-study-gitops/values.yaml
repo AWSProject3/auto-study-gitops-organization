@@ -1,0 +1,95 @@
+replicaCount: 3
+
+image:
+  repository: 471112903915.dkr.ecr.us-east-1.amazonaws.com/auto-study-app-ver2
+  tag: "0.2"
+  pullPolicy: IfNotPresent
+
+name: auto-study-development
+namespace: app
+
+serviceAccount:
+  create: true
+  name: "rds-access-sa"
+  annotations:
+    [ eks.amazonaws.com/role-arn ]: "arn:aws:iam::471112903915:role/Eks-Rds-Access-Role"
+
+containerPort: 8080
+
+env:
+  REDIS_HOST: "redis-svc.app.svc.cluster.local"
+  REDIS_PORT: "6379"
+
+secretName: "env-secret-backend"
+
+service:
+  name: auto-study-app-service
+  type: NodePort
+  port: 80
+  targetPort: 8000
+
+ingress:
+  name: auto-study-ingress
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}]'
+    alb.ingress.kubernetes.io/load-balancer-name: auto-study-alb
+  certificateArn: ${env-secret-backend:CERTIFICATE_ARN}
+
+redis:
+  labels:
+    app: redis
+  image:
+    repository: redis
+    tag: 6.2-alpine
+  statefulSet:
+    name: redis
+    replicas: 3
+    containerName: redis
+  service:
+    name: redis-svc
+    port: 6379
+  persistence:
+    name: data
+    mountPath: /data
+    storageClass: gp2
+    size: 5Gi
+
+
+secretStore:
+  name: aws-secretsmanager
+  provider:
+    service: SecretsManager
+    region: us-east-1
+    auth:
+      serviceAccountName: external-secrets-sa
+
+externalSecret:
+  name: env-secret-backend
+  refreshInterval: 1h
+  target:
+    name: env-secret-backend
+    creationPolicy: Owner
+  remoteRef:
+    key: env-secret-backend
+  data:
+    - secretKey: AWS_ACCESS_KEY
+    - secretKey: AWS_SECRET_ACCESS_KEY
+    - secretKey: REGION
+    - secretKey: BUCKET_NAME
+    - secretKey: AWS_COGNITO_USER_POOL_ID
+    - secretKey: AWS_COGNITO_APP_CLIENT_ID
+    - secretKey: OIDC_KAKAO_CLIENT_SECRET
+    - secretKey: REDIRECT_URI
+    - secretKey: TOKEN_URL
+    - secretKey: DATABASE_URL
+    - secretKey: DB_HOST
+    - secretKey: MYSQL_USER
+    - secretKey: MYSQL_PASSWORD
+    - secretKey: MYSQL_DATABASE
+    - secretKey: MYSQL_PORT
+    - secretKey: FRONT_URL
+    - secretKey: CERTIFICATE_ARN
+
