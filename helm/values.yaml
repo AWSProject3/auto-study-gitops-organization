@@ -12,7 +12,7 @@ serviceAccount:
   create: true
   name: "rds-access-sa"
   annotations:
-    [ eks.amazonaws.com/role-arn ]: "arn:aws:iam::471112903915:role/Eks-Rds-Access-Role"
+    "eks.amazonaws.com/role-arn": "arn:aws:iam::471112903915:role/Eks-Rds-Access-Role"
 
 containerPort: 8080
 
@@ -57,7 +57,6 @@ redis:
     storageClass: gp2
     size: 5Gi
 
-
 secretStore:
   name: aws-secretsmanager
   provider:
@@ -92,4 +91,3 @@ externalSecret:
     - secretKey: MYSQL_PORT
     - secretKey: FRONT_URL
     - secretKey: CERTIFICATE_ARN
-
