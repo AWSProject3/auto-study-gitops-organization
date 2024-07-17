@@ -10,6 +10,7 @@ metadata:
     {{- $certArn := include "getCertificateArn" . -}}
     {{- if ne $certArn "pending-certificate-arn" }}
     alb.ingress.kubernetes.io/certificate-arn: {{ $certArn | quote }}
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 443}]'
     {{- else }}
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
     {{- end }}
