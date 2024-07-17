@@ -90,4 +90,3 @@ externalSecret:
     - secretKey: MYSQL_DATABASE
     - secretKey: MYSQL_PORT
     - secretKey: FRONT_URL
-    - secretKey: CERTIFICATE_ARN
