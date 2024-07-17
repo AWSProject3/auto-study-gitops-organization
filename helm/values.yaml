@@ -25,7 +25,7 @@ secretName: "env-secret-backend"
 service:
   name: auto-study-app-service
   type: NodePort
-  port: 80
+  port: 443
   targetPort: 8000
 
 ingress:
