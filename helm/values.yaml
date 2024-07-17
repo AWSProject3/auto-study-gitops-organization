@@ -16,16 +16,16 @@ serviceAccount:
 
 containerPort: 8080
 
-env:
-  REDIS_HOST: "redis-svc.app.svc.cluster.local"
-  REDIS_PORT: "6379"
+#env:
+#  REDIS_HOST: "redis-svc.app.svc.cluster.local"
+#  REDIS_PORT: "6379"
 
 secretName: "env-secret-backend"
 
 service:
   name: auto-study-app-service
   type: NodePort
-  port: 443
+  port: 80
   targetPort: 8000
 
 ingress:
@@ -36,24 +36,24 @@ ingress:
     alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/load-balancer-name: auto-study-alb
 
-redis:
-  labels:
-    app: redis
-  image:
-    repository: redis
-    tag: 6.2-alpine
-  statefulSet:
-    name: redis
-    replicas: 3
-    containerName: redis
-  service:
-    name: redis-svc
-    port: 6379
-  persistence:
-    name: data
-    mountPath: /data
-    storageClass: gp2
-    size: 5Gi
+#redis:
+#  labels:
+#    app: redis
+#  image:
+#    repository: redis
+#    tag: 6.2-alpine
+#  statefulSet:
+#    name: redis
+#    replicas: 3
+#    containerName: redis
+#  service:
+#    name: redis-svc
+#    port: 6379
+#  persistence:
+#    name: data
+#    mountPath: /data
+#    storageClass: gp2
+#    size: 5Gi
 
 secretStore:
   name: aws-secretsmanager
@@ -88,4 +88,4 @@ externalSecret:
     - secretKey: MYSQL_DATABASE
     - secretKey: MYSQL_PORT
     - secretKey: FRONT_URL
-    - secretKey: CERTIFICATE_ARN
+#    - secretKey: CERTIFICATE_ARN
