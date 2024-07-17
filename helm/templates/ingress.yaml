@@ -4,13 +4,15 @@ metadata:
   name: {{ .Values.ingress.name }}
   namespace: {{ .Values.namespace }}
   annotations:
-      {{- range $key, $value := .Values.ingress.annotations }}
-      {{ $key }}: {{ $value | quote }}
-      {{- end }}
-      {{- $certArn := include "getCertificateArn" . -}}
-      {{- if ne $certArn "pending-certificate-arn" }}
+    {{- range $key, $value := .Values.ingress.annotations }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+    {{- $certArn := include "getCertificateArn" . -}}
+    {{- if ne $certArn "pending-certificate-arn" }}
     alb.ingress.kubernetes.io/certificate-arn: {{ $certArn | quote }}
-      {{- end }}
+    {{- else }}
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
+    {{- end }}
 
 spec:
   rules:
