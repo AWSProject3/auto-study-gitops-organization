@@ -4,5 +4,7 @@ metadata:
   name: {{ .Values.serviceAccount.name }}
   namespace: {{ .Values.namespace }}
   annotations:
-    eks.amazonaws.com/role-arn: {{ index .Values.serviceAccount.annotations "eks.amazonaws.com/role-arn" }}
+    eks.amazonaws.com/role-arn: "arn:aws:iam::471112903915:role/Eks-Rds-Access-Role"
+{{/*    eks.amazonaws.com/role-arn: {{ index .Values.serviceAccount.annotations "eks.amazonaws.com/role-arn" }}*/}}
+
 
