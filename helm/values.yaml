@@ -2,7 +2,7 @@ replicaCount: 3
 
 image:
   repository: 471112903915.dkr.ecr.us-east-1.amazonaws.com/auto-study-app-ver2
-  tag: "0.2"
+  tag: "latest"
   pullPolicy: IfNotPresent
 
 name: auto-study-development
