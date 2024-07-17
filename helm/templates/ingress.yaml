@@ -7,7 +7,7 @@ metadata:
     {{- range $key, $value := .Values.ingress.annotations }}
     {{ $key }}: {{ $value | quote }}
     {{- end }}
-    alb.ingress.kubernetes.io/certificate-arn: {{ .Values.ingress.certificateArn }}
+    alb.ingress.kubernetes.io/certificate-arn: {{ `{{ .Values.externalSecret.target.name | default "env-secret-backend" }}` }}
 spec:
   rules:
     - http:
