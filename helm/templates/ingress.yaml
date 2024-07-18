@@ -7,8 +7,9 @@ metadata:
     {{- range $key, $value := .Values.ingress.annotations }}
     {{ $key }}: {{ $value | quote }}
     {{- end }}
-    alb.ingress.kubernetes.io/certificate-arn: "arn:aws:acm:us-east-1:471112903915:certificate/57ee7822-6e43-43c9-aa11-9281edd324f5"
-    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 443}]'
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}, {"HTTP":80}]'
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:471112903915:certificate/57ee7822-6e43-43c9-aa11-9281edd324f5
+    alb.ingress.kubernetes.io/ssl-redirect: '443'
 
 spec:
   rules:
