@@ -88,4 +88,5 @@ externalSecret:
     - secretKey: MYSQL_DATABASE
     - secretKey: MYSQL_PORT
     - secretKey: FRONT_URL
+    - secretKey: REDIS_HOST
 #    - secretKey: CERTIFICATE_ARN
