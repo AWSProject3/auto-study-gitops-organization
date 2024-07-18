@@ -3,7 +3,7 @@ replicaCount: 3
 image:
   repository: 471112903915.dkr.ecr.us-east-1.amazonaws.com/auto-study-app-ver4
   tag: "latest"
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
 
 name: auto-study-development
 namespace: app
